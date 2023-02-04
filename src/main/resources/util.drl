@@ -1,0 +1,5 @@
+package rules;
+
+dialect  "mvel"
+
+//function String

@@ -1,0 +1,22 @@
+package rules;
+import com.zpb.drools.model.Rule;
+import com.zpb.drools.response.Result;
+
+dialect  "mvel"
+
+// 互斥规则-根据推断信息执行操作,当when条件不满足时，不会插入数据，而是执行符合规则的then语句
+rule "rule-value-1"
+    when
+        $R : Rule(currentValue < ruleValue )
+    then
+        System.err.println("不符合要求！（基于规则文件）");
+        insertLogical(Result.fail(500,"不符合要求"))
+end
+
+rule "rule-value-2"
+    when
+        $R : Rule(currentValue >= ruleValue )
+    then
+        System.out.println("符合要求！");
+        insertLogical(Result.fail(200,"符合要求"))
+end

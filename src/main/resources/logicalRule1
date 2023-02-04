@@ -1,0 +1,24 @@
+package rules;
+
+import com.zpb.drools.model.insert1.Person;
+import com.zpb.drools.model.insert1.IsChild;
+import com.zpb.drools.model.insert1.IsAdult;
+
+dialect  "mvel"
+
+rule IsChildPolicy when
+    $p : Person( age < 16 )
+then
+    System.err.println("new IsChild------");
+    System.err.println($p);
+    insertLogical(new IsChild($p));
+end
+
+rule IsAdultPolicy when
+    $p : Person( age >= 16 )
+then
+    System.err.println("new IsAdult------");
+    System.err.println($p);
+    insertLogical(new IsAdult($p) );
+end
+

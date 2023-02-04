@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: springboot-drools
+nacos:
+  config:
+    server-addr: 222.128.14.120:7848
+    namespace: rule
+
+
+

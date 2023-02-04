@@ -1,0 +1,65 @@
+package rules;
+
+import com.zpb.drools.model.insert1.Adult;
+import com.zpb.drools.model.insert1.IsAdult;
+import com.zpb.drools.model.insert1.Child;
+import com.zpb.drools.model.insert1.IsChild;
+import com.zpb.drools.model.insert1.Person;
+import com.zpb.drools.model.insert1.ChildBusPass;
+import com.zpb.drools.model.insert1.AdultBusPass;
+
+dialect  "mvel"
+
+rule IssueChildBusPass
+    when
+         $p : Person()
+         Child( person == p )
+    then
+        System.err.println("child-buss-pass）");
+        insertLogical( new ChildBusPass( $p ) );
+end
+
+rule IssueAdultBusPass when
+    $p : Person()
+    IsAdult( person == p )
+then
+    System.err.println("adult-buss-pass）");
+    insertLogical( new AdultBusPass( p ) );
+end
+
+rule ThereAreChildBusPass when
+    ChildBusPass()
+then
+    System.out.println( "There are Child Bus Pass" );
+end
+
+rule ThereAreNoChildBusPass when
+    not ChildBusPass()
+then
+    System.out.println( "There are no Child Bus Pass" );
+end
+
+rule ThereAreAdultBusPass when
+    AdultBusPass()
+then
+    System.out.println( "There are Adult Bus Pass" );
+end
+
+rule ThereAreNoAdultBusPass when
+    not AdultBusPass()
+then
+    System.out.println( "There are no Adult Bus Pass" );
+end
+
+rule ThereNoIsChild when
+    not IsChild()
+then
+    System.out.println( "ThereNoIsChild" );
+end
+
+rule ThereNoIsAdult when
+    not IsAdult()
+then
+    System.out.println( "ThereNoIsAdult" );
+end
+

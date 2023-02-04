@@ -1,0 +1,44 @@
+package rules;
+
+import com.zpb.drools.model.Subject2;
+import com.zpb.drools.response.Result;
+
+dialect  "mvel"
+
+// 课目一是否完成，课时是否完成，间隔天数
+rule "subject-1-is-finished"
+    when
+        $S:Subject2(subject1 == false )
+    then
+        System.err.println("课目一未完成");
+        insert(Result.fail(101,"课目一未完成"));
+        drools.halt();
+end
+
+rule "subject-2-school-hourls-finished"
+    when
+        $S:Subject2(16 > schoolHours)
+    then
+        System.out.println("学时未达到要求！");
+        insert(Result.fail(102,"学时未达到要求"));
+        drools.halt();
+end
+
+rule "subject-2-intervalDays-finished"
+    when
+        $S:Subject2(10 > intervalDays)
+    then
+        System.out.println("间隔天数不符合要求！");
+        insert(Result.fail(103,"间隔天数不符合要求！"));
+        drools.halt();
+end
+
+rule "subject-2-finished"
+    when
+        $S : Subject2()
+    then
+        System.out.println("符合要求！");
+        $S.setValid(true);
+        insert(Result.ok(200,"符合要求！"));
+        drools.halt();
+end
